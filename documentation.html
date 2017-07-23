@@ -72,7 +72,7 @@
 
 // Create a clip that plays the middle C
 var clip = scribble.clip({
-	notes: ['c4'],
+	notes: 'c4',
 	pattern: 'x________________'
 });
 
@@ -80,13 +80,13 @@ var clip = scribble.clip({
 scribble.midi(clip, 'c.mid');</code></pre>
 				</div>
 				<div id="notes" class="section">
-					<h4>notes {Array}</h4>
+					<h4>notes {String|Array}</h4>
 					<p>This property lets you set up the notes we want to play in the clip. You can enter notes manually or use the built-in scale/mode method to generate notes from a scale and further mangle them into an array. For instance, in the preceding example we set the 'c4' note as the only note to be played across a pattern. You can even set up a bunch of notes:</p>
 					<pre><code class="js">var scribble = require('scribbletune');
 
 // Create a clip that plays the C major scale
 var clip = scribble.clip({
-	notes: ['c4', 'd4', 'e4', 'f4', 'g4', 'a4', 'b4', 'c5'],
+	notes: 'c4 d4 e4 f4 g4 a4 b4 c5', // Or ['c4', 'd4', 'e4', 'f4', 'g4', 'a4', 'b4', 'c5']
 	pattern: 'x_x_x_x_x_x_x_x_'
 });
 
@@ -114,7 +114,7 @@ scribble.midi(clip, 'cscale.mid');</code></pre>
 					<pre><code class="js">var scribble = require('scribbletune');
 
 var clip = scribble.clip({
-	notes: ['c3'],
+	notes: 'c3',
 	pattern: 'xxxxxxxxxxxxxxxx',
 	accentMap: 'x---x-x-x---x-x-'
 });
@@ -126,7 +126,7 @@ scribble.midi(clip, 'hats.mid');</code></pre>
 					<pre><code class="js">var scribble = require('scribbletune');
 
 	var clip = scribble.clip({
-		notes: ['c4'],
+		notes: 'c4',
 		pattern: 'x'.repeat(16),
 		accentMap: [5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 127, 127, 127]
 	});
@@ -163,14 +163,14 @@ scribble.midi(clip, 'hats.mid');</code></pre>
 
 // Create a clip that occupies the first 12 notes of a 16 beat bar
 var clip1 = scribble.clip({
-	notes: ['c4'],
+	notes: 'c4',
 	pattern: 'x'.repeat(12)
 });
 
 // Create another clip that occupies the last 4 notes of a 16 beat bar
 // Since we are reducing the note length by half, we will double the pattern length
 var clip2 = scribble.clip({
-	notes: ['c4'],
+	notes: 'c4',
 	pattern: 'x_xxx_x_',
 	noteLength: '1/32'
 });
@@ -197,13 +197,16 @@ scribble.midi(clip1.concat(clip2, 'music.mid'));</code></pre>
 
 // Create a clip that plays the middle C
 var cMajor = scribble.scale(); // [ 'c3', 'd3', 'e3', 'f3', 'g3', 'a3', 'b3', 'c4' ]
-var cMinor = scribble.scale('c', 'minor'); // [ 'c3', 'd3', 'd#3', 'f3', 'g3', 'g#3', 'a#3', 'c4' ]
+var cMinor = scribble.scale('c minor'); // [ 'c3', 'd3', 'd#3', 'f3', 'g3', 'g#3', 'a#3', 'c4' ]
 
 // The scale method can also be refered to as `mode`
-cMinor = scribble.mode('c', 'minor'); // [ 'c3', 'd3', 'd#3', 'f3', 'g3', 'g#3', 'a#3', 'c4' ]
+cMinor = scribble.mode('c minor'); // [ 'c3', 'd3', 'd#3', 'f3', 'g3', 'g#3', 'a#3', 'c4' ]
 
 // That's the same as
-cMinor = scribble.mode('c', 'aeolian'); // [ 'c3', 'd3', 'd#3', 'f3', 'g3', 'g#3', 'a#3', 'c4' ]</code></pre>
+cMinor = scribble.mode('c aeolian 3'); // [ 'c3', 'd3', 'd#3', 'f3', 'g3', 'g#3', 'a#3', 'c4' ]
+
+// You can even set it as individual params if you like,
+cMinor = scribble.mode('c', 'aeolian', 3); // [ 'c3', 'd3', 'd#3', 'f3', 'g3', 'g#3', 'a#3', 'c4' ]</code></pre>
 
 					<p>There are a bunch of scales and modes available in Scribbletune. You can list the available modes by invoking the <em>modes</em> method. To view a list now, <a href="https://github.com/walmik/scribbletune/blob/master/src/modes.js">click here</a>.</p>
 				</div>
@@ -218,7 +221,7 @@ cMinor = scribble.mode('c', 'aeolian'); // [ 'c3', 'd3', 'd#3', 'f3', 'g3', 'g#3
 					<pre><code class="js">var scribble = require('scribbletune');
 
 var clip = scribble.clip({
-	notes: ['c4'],
+	notes: 'c4',
 	pattern: 'x_______'
 });
 
@@ -234,7 +237,7 @@ scribble.midi(clip, 'c.mid'); // Will create a file called <em>c.mid</em></code>
 
 var clip = scribble.clip({
 	// Use chord names directly in the notes array
-	notes: ['CMaj', 'FMaj', 'GMaj', 'CMaj'],
+	notes: 'CMaj, FMaj, GMaj, CMaj',
 	pattern: 'x---'.repeat(4)
 });
 
